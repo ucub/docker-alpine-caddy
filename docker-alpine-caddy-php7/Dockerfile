@@ -62,10 +62,8 @@ RUN addgroup -g ${PGID} www-user && \
   sed -i "s|^user = .*|user = www-user|g" /etc/php7/php-fpm.d/www.conf && \
   sed -i "s|^group = .*|group = www-user|g" /etc/php7/php-fpm.d/www.conf
 
-# RUN curl --silent --show-error --fail --location \
-#   --header "Accept: application/tar+gzip, application/x-gzip, application/octet-stream" \
-#   "https://getcomposer.org/installer" \
-#   | php -- --install-dir=/usr/bin --filename=composer
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
 RUN echo "clear_env = no" >> /etc/php7/php-fpm.conf
 
