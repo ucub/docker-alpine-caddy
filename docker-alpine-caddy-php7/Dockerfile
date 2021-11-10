@@ -1,11 +1,11 @@
 FROM yusufsanjaya24/alpine-caddy:base AS builder
 
-FROM alpine:3.12
+FROM alpine:edge
 LABEL maintainer="MangUcub <yusufsanjaya@gmail.com>" \
     architecture="amd64/x86_64" \
     caddy-version="2.2.1" \
     alpine-version="3.12" \
-	php-version="7.3" \
+	php-version="7.4" \
     build="03-Nov-2020"
 ARG PUID="1000"
 ARG PGID="1000"
@@ -14,46 +14,60 @@ COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/bin/su
 
 # Let's Encrypt Agreement
 ENV ACME_AGREE="false"
-
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN apk update && apk upgrade
 RUN apk add --no-cache --update \
 		ca-certificates \
 		curl \
 		git \
 		mailcap \
-		openssh-client \
 		php7-fpm \
 		tar \
 		tzdata \
-		tini
-
-RUN apk add --no-cache \
-		php7-bcmath \
-		php7-ctype \
-		php7-curl \
-		php7-dom \
-		php7-exif \
-		php7-fileinfo \
-		php7-gd \
-		php7-iconv \
-		php7-json \
-		php7-mbstring \
-		php7-mysqli \
-		php7-opcache \
-		php7-openssl \
-		php7-pdo \
-		php7-pdo_mysql \
-		php7-pdo_pgsql \
-		php7-pdo_sqlite \
-		php7-pgsql \
+		tini \
+		php7 \
 		php7-phar \
-		php7-session \
-		php7-simplexml \
-		php7-sqlite3 \
-		php7-tokenizer \
-		php7-xml \
-		php7-xmlreader \
-		php7-xmlwriter \
-		php7-zip
+		php7-json \
+		php7-iconv \
+		php7-openssl
+
+RUN apk add --no-cache\
+	php7-ftp \
+	php7-xdebug \
+	php7-mcrypt \
+	php7-mbstring \
+	php7-soap \
+	php7-gmp \
+	php7-pdo_odbc \
+	php7-dom \
+	php7-pdo \
+	php7-zip \
+	php7-mysqli \
+	php7-sqlite3 \
+	php7-pdo_pgsql \
+	php7-bcmath \
+	php7-gd \
+	php7-odbc \
+	php7-pdo_mysql \
+	php7-pdo_sqlite \
+	php7-gettext \
+	php7-xml \
+	php7-xmlreader \
+	php7-xmlwriter \
+	php7-tokenizer \
+	php7-xmlrpc \
+	php7-bz2 \
+	php7-pdo_dblib \
+	php7-curl \
+	php7-ctype \
+	php7-session \
+	php7-redis \
+	php7-exif \
+	php7-intl \
+	php7-fileinfo \
+	php7-ldap \
+	php7-apcu \
+	php7-simplexml
 
 
 RUN ln -sf /usr/bin/php7 /usr/bin/php
