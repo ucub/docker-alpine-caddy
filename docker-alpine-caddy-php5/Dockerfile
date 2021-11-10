@@ -1,17 +1,17 @@
 FROM yusufsanjaya24/alpine-caddy:base AS builder
 
-FROM alpine:3.12
+FROM alpine:3.14
 LABEL maintainer="MangUcub <yusufsanjaya@gmail.com>" \
     architecture="amd64/x86_64" \
-    caddy-version="2.2.1" \
-    alpine-version="3.12" \
-	php-version="7.3" \
+    caddy-version="2.4.6" \
+    alpine-version="3.14" \
+	php-version="5.3" \
     build="03-Nov-2020"
 ARG PUID="1000"
 ARG PGID="1000"
 
 # Let's Encrypt Agreement
-ENV ACME_AGREE="false"
+ENV ACME_AGREE="true"
 
 RUN apk add --no-cache \
 		ca-certificates \
