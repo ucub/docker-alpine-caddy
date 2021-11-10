@@ -3,17 +3,17 @@ FROM yusufsanjaya24/alpine-caddy:base AS builder
 FROM alpine:edge
 LABEL maintainer="MangUcub <yusufsanjaya@gmail.com>" \
     architecture="amd64/x86_64" \
-    caddy-version="2.2.1" \
-    alpine-version="3.12" \
+    caddy-version="2.4.6" \
+    alpine-version="3.14" \
 	php-version="7.4" \
-    build="03-Nov-2020"
+    build="11-Nov-2021"
 ARG PUID="1000"
 ARG PGID="1000"
 
 COPY --from=ochinchina/supervisord:latest /usr/local/bin/supervisord /usr/bin/supervisord
 
 # Let's Encrypt Agreement
-ENV ACME_AGREE="false"
+ENV ACME_AGREE="true"
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 RUN apk update && apk upgrade
 RUN apk add --no-cache --update \
